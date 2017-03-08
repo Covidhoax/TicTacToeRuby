@@ -18,6 +18,8 @@ module TicTacToe
     def display_gameboard
       n = 0
       b = @gameboard
+      puts ""
+      puts " -----------"
       3.times do
         puts "  " + b[n].to_s + " | " + b[n+1].to_s + " | " + b[n+2].to_s
         puts " -----------"
@@ -43,7 +45,7 @@ module TicTacToe
         end
 
       elsif position.is_a?(String)
-        if position.downcase = "exit"
+        if position.downcase == "exit"
           puts "bye"
           @exit = true
           return
@@ -219,8 +221,9 @@ module TicTacToe
       end
     end
   end
-
+end
   def play
+    include TicTacToe
     match = Game.new
     puts "Welcome to TicTacToe by Farhan Islam. Press 1 for a two player match. Press 2 to play against CPU"
     puts "Type EXIT to quit"
@@ -232,7 +235,5 @@ module TicTacToe
         puts "Not Possible"
     end
   end
-end
-
-
+play
 
