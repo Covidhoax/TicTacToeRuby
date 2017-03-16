@@ -1,8 +1,8 @@
 require "spec_helper"
 
-RSpec.describe TicTacToe do
+RSpec.describe tic_tac_toe do
   it "has a version number" do
-    expect(TicTacToe::VERSION).not_to be nil
+    expect(tic_tac_toe::VERSION).not_to be nil
   end
 
   it "does something useful" do

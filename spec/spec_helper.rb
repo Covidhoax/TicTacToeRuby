@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "TicTacToe"
+require "lib/tic_tac_toe"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
