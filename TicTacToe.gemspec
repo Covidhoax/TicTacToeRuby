@@ -1,13 +1,12 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'TicTacToe/version'
+
 
 Gem::Specification.new do |spec|
-  spec.name          = "TicTacToe"
-  spec.version       = TicTacToe::VERSION
+  spec.name          = "tic_tac_toe"
   spec.authors       = ["ferhan"]
-  spec.email         = ["ayondelrico@gmail.com"]
+  spec.email         = ["farhan.islam@itcollege.ee"]
 
   spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
   spec.description   = %q{TODO: Write a longer description or delete this line.}

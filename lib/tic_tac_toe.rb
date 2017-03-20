@@ -5,6 +5,7 @@ WAYS_TO_WIN = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
                [0, 3, 6], [1, 4, 7], [2, 5, 8],
                [0, 4, 8], [2, 4, 6]].freeze
 
+# this is the the tic tac toe board
 class GameBoard
   attr_accessor :cells
 
@@ -118,10 +119,10 @@ class Game
   end
 
   def swap_players
-    case @current_player
-      when @player1 then @current_player = @player2
-      else               @current_player = @player1
-    end
+    @current_player = case @current_player
+                        when @player1 then @player2
+                        else @player1
+                      end
   end
 end
 
@@ -151,7 +152,7 @@ class Human < Player
   def validate_input(input)
     if input.to_i == 0
       exit if input.casecmp('exit').zero?
-      puts 'What makes you think you can use anything but numbers? Use a number from 1 to 9'
+      puts 'Use a number from 1 to 9'
     else
       position = validate_position(input.to_i)
     end
@@ -170,6 +171,7 @@ class Human < Player
   end
 end
 
+# AI is defined in this class
 class AI < Player
   attr_reader :gameboard
 
@@ -222,6 +224,5 @@ class AI < Player
     end
   end
 end
-
 
 Game.new
