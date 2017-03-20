@@ -47,8 +47,8 @@ class Game
     @gameboard = GameBoard.new
     # default states
     @player1 = Human.new(@gameboard, 'Player 1', 'X'.red)
-    @player2 = Human.new(@gameboard, 'Player 2', 'O'.blue)
-    @current_player = @player1
+    @player2 = AI.new(@gameboard, 'Player 2', 'O'.blue)
+    @current_player = @player2
     greet
     start_screen
   end
@@ -68,16 +68,19 @@ class Game
 
   def select_game_mode(choice)
     case choice
-    when '1'    then @player2 = Human.new(@gameboard, 'Player 2', 'O'.blue)
-    when 'exit' then exit
+      when '1'    then @player2 = Human.new(@gameboard, 'Player 2', 'O'.blue)
+      when '3'    then @player1 = AI.new(@gameboard, 'AIx', 'X'.red)
+      when 'exit' then exit
     end
   end
 
   def greet
     print "\nWelcome to Tic Tac Toe.\n\n"
     print "\nPress 1 to play against another player.\n"
-
-    print "\nType EXIT  to quit.\n"
+    print "\nPress 2 to play against AI(NPC).\n"
+    print "\nPress 3 to watch AI play against AI\n"
+    print "\nType EXIT  to quit.\n\n"
+    print "\n\nGame created by Farhan\n"
   end
 
   def display_board
@@ -115,10 +118,10 @@ class Game
   end
 
   def swap_players
-    @current_player = case @current_player
-                      when @player1 then @player2
-                      else @player1
-                      end
+    case @current_player
+      when @player1 then @current_player = @player2
+      else               @current_player = @player1
+    end
   end
 end
 
@@ -126,8 +129,8 @@ end
 class Player
   attr_reader :name, :symbol
 
-  def initialize(board, name, symbol)
-    @gameboard = board
+  def initialize(gameboard, name, symbol)
+    @gameboard = gameboard
     @name = name
     @symbol = symbol
   end
@@ -166,4 +169,59 @@ class Human < Player
     position
   end
 end
+
+class AI < Player
+  attr_reader :gameboard
+
+  def take_input
+    loading_simulation
+    win_or_block(symbol) || win_or_block(other_symbol) || check_defaults
+  end
+
+  private
+
+  # first check if possible to win before human player.
+  # if not, check if possible to block opponent from winning.
+  def win_or_block(sym)
+    finished = false
+    0.upto(8) do |i|
+      origin = gameboard.cells[i]
+      gameboard.cells[i] = sym if origin.nil?
+      finished = i + 1 if gameboard.win_game?(sym)
+      gameboard.cells[i] = origin
+    end
+    finished
+  end
+
+  # default to center, if occupied, choose randomly between sides and corners.
+  # if occupied after random throw, execute reverse failsafe check.
+  def check_defaults
+    if gameboard.cells[4]
+      rand < 0.51 ? possible_position(&:even?) : possible_position(&:odd?)
+    else
+      5
+    end
+  end
+
+  def possible_position(&block)
+    result = (0..8).select(&block).each do |i|
+      return i + 1 if gameboard.cells[i].nil?
+    end
+    result.is_a?(Integer) ? result : gameboard.cells.rindex(nil) + 1
+  end
+
+  def other_symbol
+    symbol == 'X' ? 'O' : 'X'
+  end
+
+  def loading_simulation
+    str = "\r#{name} is scheming"
+    10.times do
+      print str += '.'
+      sleep(0.1)
+    end
+  end
+end
+
+
 Game.new
