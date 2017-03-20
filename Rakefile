@@ -3,4 +3,9 @@ require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+  t.libs << "spec"
+  t.libs << "lib"
+  t.test_files = FileList['test/**/*_spec.rb']
+
+
+task :default => :rspec
