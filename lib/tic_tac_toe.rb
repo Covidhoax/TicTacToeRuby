@@ -69,9 +69,9 @@ class Game
 
   def select_game_mode(choice)
     case choice
-      when '1'    then @player2 = Human.new(@gameboard, 'Player 2', 'O'.blue)
-      when '3'    then @player1 = AI.new(@gameboard, 'AIx', 'X'.red)
-      when 'exit' then exit
+    when '1'    then @player2 = Human.new(@gameboard, 'Player 2', 'O'.blue)
+    when '3'    then @player1 = AI.new(@gameboard, 'AIx', 'X'.red)
+    when 'exit' then exit
     end
   end
 
@@ -120,8 +120,8 @@ class Game
 
   def swap_players
     @current_player = case @current_player
-                        when @player1 then @player2
-                        else @player1
+                      when @player1 then @player2
+                      else @player1
                       end
   end
 end
